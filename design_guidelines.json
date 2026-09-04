@@ -1,0 +1,185 @@
+{
+  "app_name": "Calen Health",
+  "personality": "1 iOS-Native Clean (Adapted for Accessibility)",
+  "personality_one_liner": "A clear, highly legible, and reassuring medical companion that empowers elderly patients and caregivers without feeling geriatric.",
+  "color": {
+    "surface": "#F8FAFC",
+    "onSurface": "#0F172A",
+    "surfaceSecondary": "#FFFFFF",
+    "onSurfaceSecondary": "#0F172A",
+    "surfaceTertiary": "#F1F5F9",
+    "onSurfaceTertiary": "#334155",
+    "surfaceInverse": "#1E293B",
+    "onSurfaceInverse": "#FFFFFF",
+    "brand": "#2563EB",
+    "onBrand": "#FFFFFF",
+    "brandPrimary": "#2563EB",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#0F766E",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#DBEAFE",
+    "onBrandTertiary": "#1E3A8A",
+    "success": "#16A34A",
+    "onSuccess": "#FFFFFF",
+    "warning": "#D97706",
+    "onWarning": "#FFFFFF",
+    "error": "#DC2626",
+    "onError": "#FFFFFF",
+    "info": "#3B82F6",
+    "onInfo": "#FFFFFF",
+    "border": "#E2E8F0",
+    "borderStrong": "#CBD5E1",
+    "divider": "#F1F5F9",
+    "muted": "#64748B",
+    "eventConsultation": "#2563EB",
+    "eventMedication": "#16A34A",
+    "eventVaccine": "#9333EA",
+    "eventExam": "#EA580C",
+    "chartMedical": "#2563EB",
+    "chartPatient": "#16A34A"
+  },
+  "dark_color_overrides": {
+    "surface": "#0F172A",
+    "onSurface": "#F8FAFC",
+    "surfaceSecondary": "#1E293B",
+    "onSurfaceSecondary": "#F8FAFC",
+    "surfaceTertiary": "#334155",
+    "onSurfaceTertiary": "#E2E8F0",
+    "surfaceInverse": "#F8FAFC",
+    "onSurfaceInverse": "#0F172A",
+    "border": "#334155",
+    "borderStrong": "#475569",
+    "divider": "#1E293B",
+    "muted": "#94A3B8",
+    "brandTertiary": "#1E3A8A",
+    "onBrandTertiary": "#DBEAFE"
+  },
+  "typography": {
+    "displayFontFamily": "Inter_500Medium",
+    "textFontFamily": "Inter_400Regular",
+    "scale": {
+      "sm": 14,
+      "base": 16,
+      "lg": 18,
+      "xl": 22,
+      "2xl": 28
+    }
+  },
+  "spacing": {
+    "rule": "Generous spacing is critical for motor accessibility. Touch targets must not overlap. Add minimum 16px padding inside all cards, and 24px between distinct sections.",
+    "xs": 8,
+    "sm": 12,
+    "md": 16,
+    "lg": 24,
+    "xl": 32,
+    "2xl": 48,
+    "3xl": 64
+  },
+  "radius_tokens": {
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "pill": 999
+  },
+  "shadow_tier": "1",
+  "navigation": "bottom_tabs",
+  "icon_set": "lucide-react-native",
+  "glassmorphism": {
+    "enabled": "false",
+    "do's": [
+      "Use solid colors instead of blur to maintain absolute maximum contrast for elderly users."
+    ],
+    "dont's": [
+      "Do not use blur or transparency on elevated surfaces, as it reduces contrast and legibility."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "solid surfaceSecondary",
+      "android": "solid surfaceSecondary",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "solid colors",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Início",
+      "purpose": "A clear daily hub showing today's immediate schedule (medications and appointments) and a quick action to log vitals.",
+      "states": {
+        "loading": "Centered loading spinner with 'Carregando agenda...' text (16px).",
+        "empty": "Illustration of a clean calendar, 'Tudo tranquilo para hoje!' with a primary CTA to 'Adicionar Lembrete'.",
+        "error": "Message 'Não foi possível carregar a agenda' with a large 'Tentar Novamente' button."
+      },
+      "layout": "Top section: horizontal date strip (large numbers). Middle section: 'Today's Log' showing cards for scheduled medications (Green tag) and consultations (Blue tag) with large check/miss buttons. Bottom right: prominent FAB to log measurements."
+    },
+    {
+      "name": "Calendário",
+      "purpose": "Monthly and weekly tracking of all health events using the specific color-coded label system.",
+      "states": {
+        "loading": "Skeleton of calendar grid.",
+        "empty": "No events listed for the selected day.",
+        "error": "Error message with retry button."
+      },
+      "layout": "Month calendar at the top with colored dots (Azul=Consulta, Verde=Medicamento, Roxo=Vacina, Laranja=Exame) indicating events. Selecting a day updates a list below showing the chronological agenda with large cards."
+    },
+    {
+      "name": "Medicamentos",
+      "purpose": "Management of current prescriptions, adherence tracking, and refill reminders.",
+      "states": {
+        "loading": "Skeleton list of medication cards.",
+        "empty": "Pill bottle image, 'Nenhum medicamento cadastrado', with large 'Adicionar Medicamento' CTA.",
+        "error": "Error message with retry button."
+      },
+      "layout": "List view of active medications. Each card shows the drug name (18px), dosage (16px), and next time to take. Includes visual adherence rings or progress bars."
+    },
+    {
+      "name": "Evolução",
+      "purpose": "Visualizes health metrics (BP, weight, glucose) over time to track progress and identify fall risks.",
+      "states": {
+        "loading": "Skeleton of a line chart.",
+        "empty": "Icon of a chart, 'Nenhum dado registrado', with CTA 'Registrar Sinais Vitais'.",
+        "error": "Error message with retry button."
+      },
+      "layout": "Segmented control at the top to select metric (Pressão, Glicemia, Peso). Main area shows a line chart using Blue (Medical) and Green (Patient/Caregiver) lines. Below chart: historical log list."
+    },
+    {
+      "name": "Perfil",
+      "purpose": "Caregiver and patient details, emergency contacts, and app settings.",
+      "states": {
+        "loading": "Skeleton profile layout.",
+        "empty": "N/A - Profile is always present.",
+        "error": "Error message with retry button."
+      },
+      "layout": "Profile banner with patient/caregiver portrait. Large list rows (min 56px height) for Emergency Contacts, Doctors, Settings. High contrast text on all rows."
+    }
+  ],
+  "images": {
+    "profile_banner_caregiver": {
+      "url": "https://images.unsplash.com/photo-1668421915771-94a6b00076fc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNDR8MHwxfHNlYXJjaHw0fHxjaGVlcmZ1bCUyMGFjdGl2ZSUyMHNlbmlvciUyMGNvdXBsZSUyMHBvcnRyYWl0fGVufDB8fHx8MTc4MjMzNzM3MHww&ixlib=rb-4.1.0&q=85",
+      "alt": "Portrait of a smiling active senior couple, representing caregiver and patient"
+    },
+    "medications_empty_state": {
+      "url": "https://images.unsplash.com/photo-1664216294580-079bc527ae49?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzV8MHwxfHNlYXJjaHwxfHxjbGVhbiUyMHdoaXRlJTIwcGlsbCUyMGJvdHRsZSUyMG1pbmltYWxpc3RpY3xlbnwwfHx8fDE3ODg1NDQ1OTF8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Clean minimalistic white pill bottle for medication empty state"
+    }
+  },
+  "haptics": {
+    "primary_button_press": "impactLight",
+    "medication_logged": "notificationSuccess",
+    "tab_change": "selection",
+    "vital_sign_saved": "impactMedium"
+  },
+  "instructions_to_main_agent": [
+    "Strictly use the provided hex codes for the light and dark theme as requested by the user, ignoring the general ban on blue/purple since the user explicitly provided brand hex codes.",
+    "Implement the font size scale accurately: Base body text MUST be minimum 16px (`base`), subtitles 18-22px (`lg` to `xl`), and titles 22-28px (`xl` to `2xl`). This is a hard requirement for elderly accessibility.",
+    "Primary call-to-action buttons MUST have a minimum height of 56px (`paddingVertical` ~16px with 16px text) and a border radius of 12-16px. Ensure touch targets for icon buttons are at least 48x48px using `hitSlop` or generous padding.",
+    "Do NOT use glassmorphism or blur effects. Solid colors (`surfaceSecondary` or `surfaceInverse`) must be used for elevated elements to maintain maximum contrast for elderly users.",
+    "Implement the exact color coding system for events: Consultation = Blue (#2563EB), Medication = Green (#16A34A), Vaccine = Purple (#9333EA), Exam = Orange (#EA580C).",
+    "Ensure dark mode support correctly inverts surfaces as specified in `dark_color_overrides`, maintaining WCAG AA contrast.",
+    "Use `lucide-react-native` for icons, combining outline and filled variants (e.g., filled for active tab, outline for inactive, as permitted)."
+  ]
+}

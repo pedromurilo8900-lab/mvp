@@ -1,0 +1,35 @@
+{
+  "summary": "Calen Health MVP tested end-to-end. Backend: 19/19 pytest passing against public URL (auth, home, meds/doses/adherence, calendar recurrence, measurements w/ auto-IMC, symptoms, fall-risk, notifications, seed idempotent, push register). Frontend (mobile viewport 390x844): login pre-fills demo creds and signs in; Home shows 'Olá, João', pt-BR date, unread=2 badge, Próximos horizontal cards (Metformina + Cardiologia + Hemograma), Resumo do dia '3 de 5 doses tomadas' + progress bar + fall risk 'Baixo', Últimos registros with Circ. abdominal/Peso/IMC. Bottom tabs Início/Calendário/Medicamentos/Evolução/Perfil all navigate. Calendar shows month grid w/ dose tags per day + selected-day event list + legend. Medicamentos: Hoje shows dose cards with Tomei/Não tomei on pending doses, Todos lists 4 meds, Adesão shows 91% with per-day dots. Evolução shows Peso line chart + history. Perfil has Aparência (Claro/Escuro/Seguir sistema) and Acesso do cuidador / Notificações / Privacidade e segurança / Ajuda entries. Notificações screen renders with Hoje/Anteriores sections. No deprecated Expo packages (expo-av/barcode/background-fetch) detected. No React Native red screen. Only console warnings observed are cosmetic (expo-notifications web listener no-op; TouchableMixin deprecation from a lib). No blocking bugs.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "(tabs) tab bar", "issues": ["Bottom tab buttons have no testID (e.g. tab-home, tab-medications). Text 'Medicamentos' appears in both the Próximos card and the tab bar which makes text-based selectors ambiguous. Adding testID to Tabs.Screen tabBarButton would improve test stability."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": ["/app/backend/tests/test_calen_backend.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [
+    "(Nice-to-have) Add testID to each bottom tab button in /app/frontend/app/(tabs)/_layout.tsx (e.g. tabBarButton with testID 'tab-home', 'tab-calendar', etc.) to improve test reliability.",
+    "(Nice-to-have) Silence 'TouchableMixin is deprecated' warning coming from a dependency (likely react-native-tab-view or similar) — not blocking."
+  ],
+  "critical_code_review_comments": [
+    "server.py is ~1035 lines — consider splitting into routers/models modules once feature set stabilises (currently acceptable for MVP).",
+    "MongoDB _id is properly excluded in every projection ({'_id': 0}) — good.",
+    "Route ordering for /medications/{med_id} is correct (declared after /doses/* and /adherence).",
+    "All API URLs on the frontend go through EXPO_PUBLIC_BACKEND_URL via src/api.ts — no hardcoding.",
+    "Auth uses bcrypt + PyJWT HS256 with 30-day expiry; token is passed as Bearer header; no plaintext logging.",
+    "Push registration endpoint gracefully swallows provider errors (logs warning) and returns {status: 'registered'} — matches contract."
+  ],
+  "updated_files": ["/app/backend/tests/test_calen_backend.py"],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "seed_data_creation": "Existing /api/seed/demo endpoint used. Idempotent — re-invoked at test setup. No extra seed data required.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Use EXPO_PUBLIC_BACKEND_URL (not EXPO_BACKEND_URL) — frontend/.env exposes only the EXPO_PUBLIC_ variant. Bottom tab buttons currently lack testIDs; use `page.get_by_text('Medicamentos', exact=True).last` (last, not first) to click the bottom tab because the same text appears in Próximos cards on Home. Demo dose seed marks ~80% of past doses today as 'taken', so 2-3 doses per run may remain 'pending' and expose the Tomei/Não tomei buttons — this is expected.",
+  "rca_of_issue": "N/A — no bugs found."
+}
